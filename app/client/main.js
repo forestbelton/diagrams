@@ -28,11 +28,11 @@ class Main extends React.Component {
 
     getCoords(e) {
         const node = React.findDOMNode(this).querySelector('.board'),
-            cellSize = 50;
+            cellSize = 25;
 
         return {
-            x: Math.round((e.clientX - node.offsetLeft) / cellSize) * cellSize,
-            y: Math.round((e.clientY - node.offsetTop) / cellSize) * cellSize
+            x: Math.floor((e.clientX - node.offsetLeft) / cellSize) * cellSize,
+            y: Math.floor((e.clientY - node.offsetTop) / cellSize) * cellSize
         };
     }
 
