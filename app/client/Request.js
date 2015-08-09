@@ -22,6 +22,7 @@ var Request = {
     CreateObject: makeRequest('CreateObject'),
     CreateArrow: makeRequest('CreateArrow'),
     Delete: makeRequest('Delete'),
+    Clear: makeRequest('Clear'),
     registerStateHandler
 };
 

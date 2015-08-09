@@ -70,6 +70,10 @@ class Main extends React.Component {
         }
     }
 
+    handleClear() {
+        Request.Clear({});
+    }
+
     renderCommands() {
         const onObjectClick = this.onObjectClick.bind(this);
         const objects = {};
@@ -118,6 +122,9 @@ class Main extends React.Component {
                     <div>
                         <input type="radio" name="action" value="CreateArrow" />
                         <label htmlFor="CreateArrow">Create Arrow</label>
+                    </div>
+                    <div>
+                        <button onClick={this.handleClear}>Clear</button>
                     </div>
                 </div>
                 <div className="board" onClick={handleAction}>
