@@ -55,6 +55,7 @@ io.on('connection', (socket) => {
       case 'Identify': {
         // acknowledge they have connected
         boards[data.data.boardId] = boards[data.data.boardId] || [];
+        connections[data.data.boardId] = connections[data.data.boardId] || [];
 
         socket.emit('Response', {status: 'Success'});
         connections[data.data.boardId].push(socket);
