@@ -1,0 +1,9 @@
+.object {
+    position: absolute;
+}
+
+.board {
+    position:relative;
+    height:400px; /* for now */
+    border:1px solid #000;
+}
