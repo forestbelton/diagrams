@@ -28,8 +28,8 @@ export default class CategoryArrow extends React.Component {
             left: this.props.src.x
         };
 
-        const width = cellSize + Math.floor(dst.x / cellSize) * cellSize,
-            height = cellSize + Math.floor(dst.y / cellSize) * cellSize;
+        const width = cellSize + Math.abs(Math.floor(dst.x / cellSize) * cellSize),
+            height = cellSize + Math.abs(Math.floor(dst.y / cellSize) * cellSize);
 
         return (
             <svg className="arrow" height={height} width={width} style={arrowStyle}>

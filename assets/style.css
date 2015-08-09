@@ -12,6 +12,7 @@
 .arrow {
     position:absolute;
     z-index:1;
+    overflow:visible;
 }
 
 .board {
