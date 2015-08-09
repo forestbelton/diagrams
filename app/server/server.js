@@ -71,7 +71,7 @@ io.on('connection', (socket) => {
         let boardId = getBoardBySocket(socket);
         if(boardId != null) {
           socket.emit('Response', {status: 'Success'});
-          boards[boardId].push(data.data);
+          boards[boardId].push(data);
 
           sendNewState(boardId);
         } else {
