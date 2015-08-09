@@ -1,35 +1,39 @@
 import React from 'react';
 
-function startPoint(src, dst) {
+const cellSize = 25;
+
+function startPoint(center, src, dst) {
     const angle = Math.atan2(dst.y - src.y, dst.x - src.x);
 
     return {
-        x: (src.x + 12.5) + 12.5 * Math.cos(angle),
-        y: (src.y + 12.5) + 12.5 * Math.sin(angle)
+        x: center.x + (cellSize / 2) * Math.cos(angle),
+        y: center.y + (cellSize / 2) * Math.sin(angle)
     };
 }
 
 export default class CategoryArrow extends React.Component {
     render() {
-        const lineWidth = 4;
+        const lineWidth = 2;
 
-        const s0 = startPoint(this.props.src, this.props.dst);
-        const arrowStyle = {
-            top: s0.y - lineWidth / 2,
-            left: s0.x - lineWidth / 2
+        const dst = {
+            x: this.props.dst.x - this.props.src.x,
+            y: this.props.dst.y - this.props.src.y
         };
 
-        const height = Math.max(lineWidth, Math.abs(this.props.dst.y - this.props.src.y) - 25),
-            width = Math.max(lineWidth, Math.abs(this.props.dst.x - this.props.src.x) - 25);
+        const s0 = startPoint({ x: cellSize / 2, y: cellSize / 2 }, this.props.src, this.props.dst);
+        const s1 = startPoint({ x: dst.x + cellSize / 2, y: dst.y + cellSize / 2 }, this.props.dst, this.props.src);
 
-        const x1 = this.props.src.x < this.props.dst.x ? 0 : (width == lineWidth ? 0 : width),
-            y1 = this.props.src.y < this.props.dst.y ? 0 : (height == lineWidth ? 0 : height),
-            x2 = this.props.src.x < this.props.dst.x ? (width == lineWidth ? 0 : width) : 0,
-            y2 = this.props.src.y < this.props.dst.y ? (height == lineWidth ? 0 : height) : 0;
+        const arrowStyle = {
+            top: this.props.src.y,
+            left: this.props.src.x
+        };
+
+        const width = cellSize + Math.floor(dst.x / cellSize) * cellSize,
+            height = cellSize + Math.floor(dst.y / cellSize) * cellSize;
 
         return (
             <svg className="arrow" height={height} width={width} style={arrowStyle}>
-                <line x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={lineWidth} stroke="black" />
+                <line x1={s0.x} y1={s0.y} x2={s1.x} y2={s1.y} strokeWidth={lineWidth} stroke="black" />
             </svg>
         );
     }

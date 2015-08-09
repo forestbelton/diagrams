@@ -6,10 +6,12 @@
     min-height:25px;
     text-align:center;
     line-height:25px;
+    z-index:2;
 }
 
 .arrow {
     position:absolute;
+    z-index:1;
 }
 
 .board {
