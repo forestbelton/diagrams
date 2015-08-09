@@ -19,9 +19,9 @@ let sendNewState = (boardId) => {
 };
 
 let leave = (socket) => {
-  let boardId = socketBoard[socket];
+  let boardId = socketBoard[socket.id];
   if(boardId != null) {
-    delete socketBoard[socket];
+    delete socketBoard[socket.id];
 
     let index = connections[boardId].indexOf(socket);
     if(index != -1) {
@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
         // acknowledge they have connected
         boards[data.data.boardId] = boards[data.data.boardId] || [];
         connections[data.data.boardId] = connections[data.data.boardId] || [];
-        socketBoard[socket] = data.data.boardId;
+        socketBoard[socket.id] = data.data.boardId;
 
         socket.emit('Response', {status: 'Success'});
         connections[data.data.boardId].push(socket);
@@ -68,7 +68,7 @@ io.on('connection', (socket) => {
       case 'CreateObject':
       case 'CreateArrow':
       case 'Delete': {
-        let boardId = socketBoard[socket];
+        let boardId = socketBoard[socket.id];
         if(boardId != null) {
           socket.emit('Response', {status: 'Success'});
           boards[boardId].push(data);
