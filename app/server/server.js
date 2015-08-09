@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
 
   socket.on('Request', (data) => {
     switch(data.type) {
-        case 'Identity': {
+      case 'Identify': {
         // acknowledge they have connected
         boards[data.data.boardId] = boards[data.data.boardId] || [];
 
@@ -64,30 +64,8 @@ io.on('connection', (socket) => {
 
         break;
       }
-      case 'CreateObject': {
-        let boardId = getBoardBySocket(socket);
-        if(boardId != null) {
-          socket.emit('Response', {status: 'Success'});
-          boards[boardId].push(data.data);
-
-          sendNewState(boardId);
-        } else {
-          socket.emit('Response', {status: 'Failure'});
-        }
-        break;
-      }
-      case 'CreateArrow': {
-        let boardId = getBoardBySocket(socket);
-        if(boardId != null) {
-          socket.emit('Response', {status: 'Success'});
-          boards[boardId].push(data);
-
-          sendNewState(boardId);
-        } else {
-          socket.emit('Response', {status: 'Failure'});
-        }
-        break;
-      }
+      case 'CreateObject':
+      case 'CreateArrow':
       case 'Delete': {
         let boardId = getBoardBySocket(socket);
         if(boardId != null) {
