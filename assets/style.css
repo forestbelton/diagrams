@@ -4,6 +4,10 @@
     user-select:none;
 }
 
+.arrow {
+    position:absolute;
+}
+
 .board {
     position:relative;
     height:400px; /* for now */

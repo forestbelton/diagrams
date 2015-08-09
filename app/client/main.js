@@ -67,23 +67,37 @@ class Main extends React.Component {
 
     renderCommands() {
         const onObjectClick = this.onObjectClick.bind(this);
+        const objects = {};
+        const arrows = {};
 
-        return this.state.commands.map(cmd => {
+        this.state.commands.forEach(cmd => {
             const type = cmd.type,
                 data = cmd.data;
 
             switch(type) {
                 case 'CreateObject':
-                    return <CategoryObject key={data.id} id={data.id} x={data.x}
-                                           y={data.y} name={data.name}
-                                           onClick={onObjectClick} />;
+                    objects[data.id] = <CategoryObject key={data.id}
+                                                       id={data.id} x={data.x}
+                                                       y={data.y}
+                                                       name={data.name}
+                                                       onClick={onObjectClick} />;
+                break;
 
                 case 'CreateArrow':
-                    return <CategoryArrow key={data.id} id={data.id}
-                                          src={{x:0,y:0}} dst={{x:0,y:0}}
-                                          name={data.name} />;
+                    const srcObj = objects[data.src],
+                        dstObj = objects[data.dst],
+                        src = { x: srcObj.props.x, y: srcObj.props.y },
+                        dst = { x: dstObj.props.x, y: dstObj.props.y };
+
+                    arrows[data.id] = <CategoryArrow key={data.id} id={data.id}
+                                                     src={src} dst={dst}
+                                                     name={data.name} />;
+                break;
             }
         });
+
+        return Object.keys(objects).map(k => objects[k])
+            .concat(Object.keys(arrows).map(k => arrows[k]));
     }
 
     render() {
