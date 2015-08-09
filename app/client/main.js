@@ -32,14 +32,17 @@ class Main extends React.Component {
             y = e.clientY - node.offsetTop;
 
         switch(action) {
-            case 'CreateObject':
+            case 'CreateObject': {
+                const name = prompt('Name?');
+
                 Request.CreateObject({
                     x,
                     y,
                     id: Math.random().toString(),
-                    name: 'X'
+                    name
                 });
                 break;
+            }
         }
     }
 
@@ -49,14 +52,16 @@ class Main extends React.Component {
         e.stopPropagation();
 
         if(action === 'CreateArrow') {
-            var arrowPoints = this.state.arrowPoints.concat(object);
+            const arrowPoints = this.state.arrowPoints.concat(object);
 
             if(arrowPoints.length == 2) {
+                const name = prompt('Name?');
+
                 Request.CreateArrow({
                     src: arrowPoints[0].props.id,
                     dst: arrowPoints[1].props.id,
                     id: Math.random().toString(),
-                    name: 'X'
+                    name
                 });
                 this.setState({ arrowPoints: [] });
             } else {
