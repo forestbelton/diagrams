@@ -49,50 +49,57 @@ app.get('/board/:id', (req, res) => {
 // SOCKET.IO
 
 io.on('connection', (socket) => {
-  socket.on('Identify', (data) => {
-    // acknowledge they have connected
-    boards[data.board] = boards[data.boards] || [];
 
-    socket.emit('Response', {status: 'Success'});
-    connections[data.board].push(socket);
+  socket.on('Request', (data) => {
+    switch(data.type) {
+        case 'Identity': {
+        // acknowledge they have connected
+        boards[data.data.boardId] = boards[data.data.boardId] || [];
 
-    // send current state of the board they are connected to
-    socket.emit('StateUpdate', boards[data.board]);
-  });
+        socket.emit('Response', {status: 'Success'});
+        connections[data.data.boardId].push(socket);
 
-  socket.on('CreateObject', (data) => {
-    let boardId = getBoardBySocket(socket);
-    if(boardId != null) {
-      socket.emit('Response', {status: 'Success'});
-      boards[boardId].push(data);
+        // send current state of the board they are connected to
+        socket.emit('StateUpdate', boards[data.data.boardId]);
 
-      sendNewState(boardId);
-    } else {
-      socket.emit('Response', {status: 'Failure'});
-    }
-  });
+        break;
+      }
+      case 'CreateObject': {
+        let boardId = getBoardBySocket(socket);
+        if(boardId != null) {
+          socket.emit('Response', {status: 'Success'});
+          boards[boardId].push(data.data);
 
-  socket.on('CreateArrow', (data) => {
-    let boardId = getBoardBySocket(socket);
-    if(boardId != null) {
-      socket.emit('Response', {status: 'Success'});
-      boards[boardId].push(data);
+          sendNewState(boardId);
+        } else {
+          socket.emit('Response', {status: 'Failure'});
+        }
+        break;
+      }
+      case 'CreateArrow': {
+        let boardId = getBoardBySocket(socket);
+        if(boardId != null) {
+          socket.emit('Response', {status: 'Success'});
+          boards[boardId].push(data);
 
-      sendNewState(boardId);
-    } else {
-      socket.emit('Response', {status: 'Failure'});
-    }
-  });
+          sendNewState(boardId);
+        } else {
+          socket.emit('Response', {status: 'Failure'});
+        }
+        break;
+      }
+      case 'Delete': {
+        let boardId = getBoardBySocket(socket);
+        if(boardId != null) {
+          socket.emit('Response', {status: 'Success'});
+          boards[boardId].push(data);
 
-  socket.on('Delete', (data) => {
-    let boardId = getBoardBySocket(socket);
-    if(boardId != null) {
-      socket.emit('Response', {status: 'Success'});
-      boards[boardId].push(data);
-
-      sendNewState(boardId);
-    } else {
-      socket.emit('Response', {status: 'Failure'});
+          sendNewState(boardId);
+        } else {
+          socket.emit('Response', {status: 'Failure'});
+        }
+        break;
+      }
     }
   });
 
