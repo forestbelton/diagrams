@@ -1,9 +1,12 @@
 .object {
-    position: absolute;
+    position:absolute;
+    cursor:pointer;
+    user-select:none;
 }
 
 .board {
     position:relative;
     height:400px; /* for now */
     border:1px solid #000;
+    user-select:none;
 }
