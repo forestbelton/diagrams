@@ -27,11 +27,12 @@ class Main extends React.Component {
     }
 
     getCoords(e) {
-        const node = React.findDOMNode(this).querySelector('.board');
+        const node = React.findDOMNode(this).querySelector('.board'),
+            cellSize = 50;
 
         return {
-            x: Math.round((e.clientX - node.offsetLeft) / 50) * 50,
-            y: Math.round((e.clientY - node.offsetTop) / 50) * 50
+            x: Math.round((e.clientX - node.offsetLeft) / cellSize) * cellSize,
+            y: Math.round((e.clientY - node.offsetTop) / cellSize) * cellSize
         };
     }
 
@@ -127,14 +128,14 @@ class Main extends React.Component {
         });
     }
 
-    onMouseOut() {
+    onMouseLeave() {
         this.setState({ hovering: false });
     }
 
     render() {
         const handleAction = this.handleAction.bind(this),
             onMouseMove = this.onMouseMove.bind(this),
-            onMouseOut = this.onMouseOut.bind(this);
+            onMouseLeave = this.onMouseLeave.bind(this);
 
         return (
             <div>
@@ -151,7 +152,7 @@ class Main extends React.Component {
                         <button onClick={this.handleClear}>Clear</button>
                     </div>
                 </div>
-                <div className="board" onClick={handleAction} onMouseMove={onMouseMove} onMouseOut={onMouseOut}>
+                <div className="board" onClick={handleAction} onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}>
                     { this.state.hovering ? <div className="hover" style={{ top: this.state.hoverY, left: this.state.hoverX }} /> : null }
                     {this.renderCommands()}
                 </div>
