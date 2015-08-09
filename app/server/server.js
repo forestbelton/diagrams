@@ -5,20 +5,11 @@ let io = require('socket.io')(server);
 server.listen(4040);
 
 let boards = {}; // state
-let connections = {};
+let connections = {}; // key: board, value: [socket]
+
+let socketBoard = {}; // key: socket, value: board
 
 // UTILITY FUNCTIONS
-
-let getBoardBySocket = (socket) => {
-  let board = null;
-  Object.keys(connections).forEach(boardId => {
-    if(connections[boardId].indexOf(socket) != -1) {
-      board = boardId;
-    }
-  });
-
-  return board;
-};
 
 let sendNewState = (boardId) => {
   let state = boards[boardId];
@@ -28,12 +19,20 @@ let sendNewState = (boardId) => {
 };
 
 let leave = (socket) => {
-  Object.keys(connections).forEach(boardId => {
+  let boardId = socketBoard[socket];
+  if(boardId != null) {
+    delete socketBoard[socket];
+
     let index = connections[boardId].indexOf(socket);
     if(index != -1) {
       connections[boardId].splice(index, 1);
+
+      if(connections[boardId].length <= 0) {
+        delete boards[boardId];
+        delete connections[boardId];
+      }
     }
-  });
+  }
 };
 
 // EXPRESS
@@ -56,6 +55,7 @@ io.on('connection', (socket) => {
         // acknowledge they have connected
         boards[data.data.boardId] = boards[data.data.boardId] || [];
         connections[data.data.boardId] = connections[data.data.boardId] || [];
+        socketBoard[socket] = data.data.boardId;
 
         socket.emit('Response', {status: 'Success'});
         connections[data.data.boardId].push(socket);
@@ -68,7 +68,7 @@ io.on('connection', (socket) => {
       case 'CreateObject':
       case 'CreateArrow':
       case 'Delete': {
-        let boardId = getBoardBySocket(socket);
+        let boardId = socketBoard[socket];
         if(boardId != null) {
           socket.emit('Response', {status: 'Success'});
           boards[boardId].push(data);
