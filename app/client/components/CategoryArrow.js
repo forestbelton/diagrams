@@ -31,9 +31,16 @@ export default class CategoryArrow extends React.Component {
         const width = cellSize + Math.abs(Math.floor(dst.x / cellSize) * cellSize),
             height = cellSize + Math.abs(Math.floor(dst.y / cellSize) * cellSize);
 
+        const marker = '<marker id="triangle" viewBox="0 0 10 10" refX="5"'
+        + ' refY="5" markerWidth="4" markerHeight="4" orient="auto">'
+        + '<path d="M 0 0 L 10 5 L 0 10 z" /></marker>';
+
         return (
             <svg className="arrow" height={height} width={width} style={arrowStyle}>
-                <line x1={s0.x} y1={s0.y} x2={s1.x} y2={s1.y} strokeWidth={lineWidth} stroke="black" />
+                <defs dangerouslySetInnerHTML={{ __html : marker }} />
+                <line x1={s0.x} y1={s0.y} x2={s1.x} y2={s1.y}
+                    strokeWidth={lineWidth} stroke="black"
+                    markerEnd="url(#triangle)" />
             </svg>
         );
     }
