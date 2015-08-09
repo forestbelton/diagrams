@@ -1,0 +1,19 @@
+{
+  "name": "diagrams",
+  "version": "1.0.0",
+  "description": "app for drawing commutative diagrams",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/forestbelton/diagrams.git"
+  },
+  "author": "Forest Belton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/forestbelton/diagrams/issues"
+  },
+  "homepage": "https://github.com/forestbelton/diagrams#readme"
+}
