@@ -7,15 +7,18 @@ class Main extends React.Component {
         super(props);
         this.state = {
             actionState: 'NONE',
-            objects: []
+            commands: []
         };
     }
 
     componentDidMount() {
-        Request.registerStateHandler(this.updateBoard.bind(this));
+        Request.registerStateHandler(this.updateCommands.bind(this));
     }
 
-    updateBoard(data) {
+    updateCommands(data) {
+        this.setState({
+            commands: data
+        });
     }
 
     createObject() {
@@ -34,15 +37,12 @@ class Main extends React.Component {
                 Request.CreateObject({
                     x,
                     y,
-                    id: "test",
+                    id: Math.random().toString(),
                     name: "X"
                 });
 
                 this.setState({
-                    actionState: 'NONE',
-                    objects: this.state.objects.concat(
-                        <CategoryObject x={x} y={y} id="test" name="X" />
-                    )
+                    actionState: 'NONE'
                 });
                 break;
         }
@@ -58,7 +58,12 @@ class Main extends React.Component {
                     <button onClick={createObject}>Create object</button>
                 </div>
                 <div className="board" onClick={handleAction}>
-                    {this.state.objects}
+                    {this.state.commands.map(cmd => {
+                        const data = cmd.data;
+                        return <CategoryObject key={data.id} id={data.id}
+                                               x={data.x} y={data.y}
+                                               name={data.name} />;
+                    })}
                 </div>
             </div>
         );
