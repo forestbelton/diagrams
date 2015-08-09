@@ -6,7 +6,6 @@ class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            actionState: 'NONE',
             commands: []
         };
     }
@@ -21,41 +20,38 @@ class Main extends React.Component {
         });
     }
 
-    createObject() {
-        this.setState({
-            actionState: 'CREATE_OBJECT'
-        });
-    }
-
     handleAction(e) {
         const node = React.findDOMNode(this),
+            action = node.querySelector('[name="action"]').value,
             x = e.pageX - node.offsetLeft,
             y = e.pageY - node.offsetTop;
 
-        switch(this.state.actionState) {
-            case 'CREATE_OBJECT':
+        switch(action) {
+            case 'CreateObject':
                 Request.CreateObject({
                     x,
                     y,
                     id: Math.random().toString(),
                     name: "X"
                 });
-
-                this.setState({
-                    actionState: 'NONE'
-                });
                 break;
         }
     }
 
     render() {
-        const createObject = this.createObject.bind(this);
         const handleAction = this.handleAction.bind(this);
 
         return (
             <div>
                 <div className="command-list">
-                    <button onClick={createObject}>Create object</button>
+                    <div>
+                        <input type="radio" name="action" value="CreateObject" defaultChecked={true} />
+                        <label htmlFor="CreateObject">Create Object</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="action" value="CreateArrow" />
+                        <label htmlFor="CreateArrow">Create Arrow</label>
+                    </div>
                 </div>
                 <div className="board" onClick={handleAction}>
                     {this.state.commands.map(cmd => {
