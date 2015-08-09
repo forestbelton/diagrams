@@ -12,8 +12,8 @@ export default class CategoryArrow extends React.Component {
             left: Math.min(this.props.src.x, this.props.dst.x)
         };
 
-        const height = Math.abs(this.props.dst.y - this.props.src.y),
-            width = Math.abs(this.props.dst.x - this.props.src.x);
+        const height = Math.max(2, Math.abs(this.props.dst.y - this.props.src.y)),
+            width = Math.max(2, Math.abs(this.props.dst.x - this.props.src.x));
 
         const x1 = this.props.src.x < this.props.dst.x ? 0 : width,
             y1 = this.props.src.y < this.props.dst.y ? 0 : height,

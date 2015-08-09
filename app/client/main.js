@@ -9,7 +9,8 @@ class Main extends React.Component {
         super(props);
         this.state = {
             commands: [],
-            arrowPoints: []
+            arrowPoints: [],
+            hovering: false
         };
     }
 
@@ -25,19 +26,26 @@ class Main extends React.Component {
         return React.findDOMNode(this).querySelector('[name="action"]:checked').value;
     }
 
+    getCoords(e) {
+        const node = React.findDOMNode(this).querySelector('.board');
+
+        return {
+            x: Math.round((e.clientX - node.offsetLeft) / 50) * 50,
+            y: Math.round((e.clientY - node.offsetTop) / 50) * 50
+        };
+    }
+
     handleAction(e) {
-        const node = React.findDOMNode(this).querySelector('.board'),
-            action = this.getAction(),
-            x = e.clientX - node.offsetLeft,
-            y = e.clientY - node.offsetTop;
+        const action = this.getAction(),
+            coords = this.getCoords(e);
 
         switch(action) {
             case 'CreateObject': {
                 const name = prompt('Name?');
 
                 Request.CreateObject({
-                    x,
-                    y,
+                    x: coords.x,
+                    y: coords.y,
                     id: Math.random().toString(),
                     name
                 });
@@ -105,8 +113,24 @@ class Main extends React.Component {
             .concat(Object.keys(arrows).map(k => arrows[k]));
     }
 
+    onMouseMove(e) {
+        const coords = this.getCoords(e);
+
+        this.setState({
+            hovering: true,
+            hoverX: coords.x,
+            hoverY: coords.y
+        });
+    }
+
+    onMouseOut() {
+        this.setState({ hovering: false });
+    }
+
     render() {
-        const handleAction  = this.handleAction.bind(this);
+        const handleAction = this.handleAction.bind(this),
+            onMouseMove = this.onMouseMove.bind(this),
+            onMouseOut = this.onMouseOut.bind(this);
 
         return (
             <div>
@@ -120,7 +144,8 @@ class Main extends React.Component {
                         <label htmlFor="CreateArrow">Create Arrow</label>
                     </div>
                 </div>
-                <div className="board" onClick={handleAction}>
+                <div className="board" onClick={handleAction} onMouseMove={onMouseMove} onMouseOut={onMouseOut}>
+                    { this.state.hovering ? <div className="hover" style={{ top: this.state.hoverY, left: this.state.hoverX }} /> : null }
                     {this.renderCommands()}
                 </div>
             </div>

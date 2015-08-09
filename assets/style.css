@@ -14,3 +14,11 @@
     border:1px solid #000;
     user-select:none;
 }
+
+.hover {
+    position:absolute;
+    width:25px;
+    height:25px;
+    border-radius:25px;
+    background:#EDE5E2;
+}
