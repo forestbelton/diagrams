@@ -2,6 +2,10 @@
     position:absolute;
     cursor:pointer;
     user-select:none;
+    min-width:25px;
+    min-height:25px;
+    text-align:center;
+    line-height:25px;
 }
 
 .arrow {

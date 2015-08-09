@@ -2,11 +2,6 @@ import React from 'react';
 
 export default class CategoryArrow extends React.Component {
     render() {
-        const lineStyle = {
-            stroke: 'rgb(0, 0, 0)',
-            strokeWidth: 2
-        };
-
         const arrowStyle = {
             top: Math.min(this.props.src.y, this.props.dst.y),
             left: Math.min(this.props.src.x, this.props.dst.x)
@@ -22,7 +17,7 @@ export default class CategoryArrow extends React.Component {
 
         return (
             <svg className="arrow" height={height} width={width} style={arrowStyle}>
-                <line x1={x1} y1={y1} x2={x2} y2={y2} style={lineStyle} />
+                <line x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth="2" stroke="black" />
             </svg>
         );
     }
