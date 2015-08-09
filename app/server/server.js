@@ -13,7 +13,7 @@ let getBoardBySocket = (socket) => {
   let board = null;
   Object.keys(connections).forEach(boardId => {
     if(connections[boardId].indexOf(socket) != -1) {
-      board = cs;
+      board = boardId;
     }
   });
 
@@ -71,7 +71,7 @@ io.on('connection', (socket) => {
         let boardId = getBoardBySocket(socket);
         if(boardId != null) {
           socket.emit('Response', {status: 'Success'});
-          boards[boardId].push(data);
+          boards[boardId].push(data.data);
 
           sendNewState(boardId);
         } else {
