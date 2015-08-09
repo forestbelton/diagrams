@@ -1,14 +1,14 @@
 import socketIO from 'socket.io-client';
-const socket = socketIO('http://localhost');
+const socket = socketIO('http://localhost:4040');
 
-function Request(type) {
+function makeRequest(type) {
     return function(data) {
         socket.emit('Request', {type, data});
     };
 }
 
 socket.on('connect', function() {
-    Request.Identify(socket, {
+    Request.Identify({
         boardId: Math.random().toString()
     });
 });
@@ -17,10 +17,12 @@ function registerStateHandler(callback) {
     socket.on('StateUpdate', callback);
 }
 
-export default {
-    Identify: Request('Identify'),
-    CreateObject: Request('CreateObject'),
-    CreateArrow: Request('CreateArrow'),
-    Delete: Request('Delete'),
+var Request = {
+    Identify: makeRequest('Identify'),
+    CreateObject: makeRequest('CreateObject'),
+    CreateArrow: makeRequest('CreateArrow'),
+    Delete: makeRequest('Delete'),
     registerStateHandler
 };
+
+export default Request;
