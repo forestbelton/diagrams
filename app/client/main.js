@@ -1,4 +1,5 @@
 import React from 'react';
+import Request from './Request';
 import CategoryObject from './components/CategoryObject';
 
 class Main extends React.Component {
@@ -8,6 +9,13 @@ class Main extends React.Component {
             actionState: 'NONE',
             objects: []
         };
+    }
+
+    componentDidMount() {
+        Request.registerStateHandler(this.updateBoard.bind(this));
+    }
+
+    updateBoard(data) {
     }
 
     createObject() {
@@ -23,6 +31,13 @@ class Main extends React.Component {
 
         switch(this.state.actionState) {
             case 'CREATE_OBJECT':
+                Request.CreateObject({
+                    x,
+                    y,
+                    id: "test",
+                    name: "X"
+                });
+
                 this.setState({
                     actionState: 'NONE',
                     objects: this.state.objects.concat(
