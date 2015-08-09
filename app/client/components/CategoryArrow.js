@@ -8,8 +8,8 @@ export default class CategoryArrow extends React.Component {
         };
 
         const arrowStyle = {
-            top: this.props.src.y,
-            left: this.props.src.x
+            top: Math.min(this.props.src.y, this.props.dst.y),
+            left: Math.min(this.props.src.x, this.props.dst.x)
         };
 
         const height = Math.abs(this.props.dst.y - this.props.src.y),
