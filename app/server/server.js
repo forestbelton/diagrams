@@ -79,6 +79,18 @@ io.on('connection', (socket) => {
         }
         break;
       }
+      case 'Clear': {
+        let boardId = socketBoard[socket.id];
+        if(boardId != null) {
+          socket.emit('Response', {status: 'Success'});
+          boards[boardId] = [];
+
+          sendNewState(boardId);
+        } else {
+          socket.emit('Response', {status: 'Failure'});
+        }
+        break;
+      }
     }
   });
 
