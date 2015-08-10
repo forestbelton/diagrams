@@ -39,7 +39,7 @@ export default class CategoryArrow extends React.Component {
         const defs = `<defs>${path}${marker}</defs>`;
         const usePath = `<use xlink:href="#path-${this.props.id}" stroke-width="${lineWidth}" `
         + `stroke="black" marker-end="url(#triangle)" />`;
-        const text = `<text text-anchor="middle"><textPath xlink:href="#path-${this.props.id}" startOffset="50%">${this.props.name}`
+        const text = `<text text-anchor="middle"><textPath xlink:href="#path-${this.props.id}" startOffset="50%" alignment-baseline="text-after-edge">${this.props.name}`
         + `</textPath></text>`;
 
         return (
