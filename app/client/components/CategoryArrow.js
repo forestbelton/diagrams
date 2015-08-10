@@ -31,17 +31,20 @@ export default class CategoryArrow extends React.Component {
         const width = cellSize + Math.abs(Math.floor(dst.x / cellSize) * cellSize),
             height = cellSize + Math.abs(Math.floor(dst.y / cellSize) * cellSize);
 
+        const path = `<path id="path" d="M ${Math.round(s0.x)} ${Math.round(s0.y)} L ${Math.round(s1.x)} ${Math.round(s1.y)}" />`;
         const marker = '<marker id="triangle" viewBox="0 0 10 10" refX="5"'
         + ' refY="5" markerWidth="4" markerHeight="4" orient="auto">'
         + '<path d="M 0 0 L 10 5 L 0 10 z" /></marker>';
 
+        const defs = `<defs>${path}${marker}</defs>`;
+        const usePath = `<use xlink:href="#path" stroke-width="${lineWidth}" `
+        + `stroke="black" marker-end="url(#triangle)" />`;
+        const text = `<text text-anchor="middle"><textPath xlink:href="#path" startOffset="50%">${this.props.name}`
+        + `</textPath></text>`;
+
         return (
-            <svg className="arrow" height={height} width={width} style={arrowStyle}>
-                <defs dangerouslySetInnerHTML={{ __html : marker }} />
-                <line x1={s0.x} y1={s0.y} x2={s1.x} y2={s1.y}
-                    strokeWidth={lineWidth} stroke="black"
-                    markerEnd="url(#triangle)" />
-            </svg>
+            <svg className="arrow" height={height} width={width} style={arrowStyle}
+                dangerouslySetInnerHTML={{ __html: defs + usePath + text }} />
         );
     }
 }
