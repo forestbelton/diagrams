@@ -31,15 +31,15 @@ export default class CategoryArrow extends React.Component {
         const width = cellSize + Math.abs(Math.floor(dst.x / cellSize) * cellSize),
             height = cellSize + Math.abs(Math.floor(dst.y / cellSize) * cellSize);
 
-        const path = `<path id="path" d="M ${Math.round(s0.x)} ${Math.round(s0.y)} L ${Math.round(s1.x)} ${Math.round(s1.y)}" />`;
+        const path = `<path id="path-${this.props.id}" d="M ${Math.round(s0.x)} ${Math.round(s0.y)} L ${Math.round(s1.x)} ${Math.round(s1.y)}" />`;
         const marker = '<marker id="triangle" viewBox="0 0 10 10" refX="5"'
         + ' refY="5" markerWidth="4" markerHeight="4" orient="auto">'
         + '<path d="M 0 0 L 10 5 L 0 10 z" /></marker>';
 
         const defs = `<defs>${path}${marker}</defs>`;
-        const usePath = `<use xlink:href="#path" stroke-width="${lineWidth}" `
+        const usePath = `<use xlink:href="#path-${this.props.id}" stroke-width="${lineWidth}" `
         + `stroke="black" marker-end="url(#triangle)" />`;
-        const text = `<text text-anchor="middle"><textPath xlink:href="#path" startOffset="50%">${this.props.name}`
+        const text = `<text text-anchor="middle"><textPath xlink:href="#path-${this.props.id}" startOffset="50%">${this.props.name}`
         + `</textPath></text>`;
 
         return (
