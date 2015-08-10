@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
 
 app.get('/board/:id', (req, res) => {
   if(process.env.production) {
-    res.sendFile(path.resolve('assets/index.prod.html'));
+    res.sendFile(path.resolve('assets/index.production.html'));
   } else {
     res.sendFile(path.resolve('assets/index.html'));
   }
