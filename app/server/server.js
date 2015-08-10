@@ -1,4 +1,5 @@
-let app = require('express')();
+let express = require('express');
+let app = express();
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
 
@@ -46,8 +47,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/board/:id', (req, res) => {
-  res.sendFile(path.resolve('assets/index.html'));
+  if(process.env.production) {
+    res.sendFile(path.resolve('assets/index.prod.html'));
+  } else {
+    res.sendFile(path.resolve('assets/index.html'));
+  }
 });
+
+if(process.env.production) {
+  app.use(express.static(path.resolve('assets/')));
+}
 
 // SOCKET.IO
 
