@@ -11,5 +11,10 @@ module.exports = {
         loaders: [
             { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }
         ]
+    },
+    resolve: {
+        alias: {
+          websocketUrl: '../../servers/local.js'
+        }
     }
 };

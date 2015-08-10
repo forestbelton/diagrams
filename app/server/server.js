@@ -6,7 +6,7 @@ let io = require('socket.io')(server);
 let path = require('path');
 let shortid = require('shortid');
 
-server.listen(4040);
+server.listen(5050);
 
 let boards = {}; // state
 let connections = {}; // key: board, value: [socket]

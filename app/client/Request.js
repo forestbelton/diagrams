@@ -1,5 +1,6 @@
 import socketIO from 'socket.io-client';
-const socket = socketIO('http://localhost:4040');
+console.log(require('websocketUrl'));
+const socket = socketIO(require('websocketUrl'));
 
 function makeRequest(type) {
     return function(data) {
