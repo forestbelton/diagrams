@@ -47,14 +47,14 @@ app.get('/', (req, res) => {
 });
 
 app.get('/board/:id', (req, res) => {
-  if(process.env.production) {
+  if(app.get('env') == 'production') {
     res.sendFile(path.resolve('assets/index.production.html'));
   } else {
     res.sendFile(path.resolve('assets/index.html'));
   }
 });
 
-if(process.env.production) {
+if(app.get('env') == 'production') {
   app.use(express.static(path.resolve('assets/')));
 }
 
