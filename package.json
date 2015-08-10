@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev-server": "./node_modules/.bin/webpack-dev-server --content-base assets/ --hot"
+    "start-dev-server": "./node_modules/.bin/webpack-dev-server --content-base assets/ --hot",
+    "build": "./node_modules/.bin/webpack -p --config webpack-production.config.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   "dependencies": {
     "babel": "^5.8.21",
     "express": "^4.13.3",
+    "shortid": "^2.2.2",
     "socket.io": "^1.3.6"
   }
 }

@@ -1,8 +1,12 @@
-let app = require('express')();
+let express = require('express');
+let app = express();
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
 
-server.listen(4040);
+let path = require('path');
+let shortid = require('shortid');
+
+server.listen(5050);
 
 let boards = {}; // state
 let connections = {}; // key: board, value: [socket]
@@ -38,12 +42,21 @@ let leave = (socket) => {
 // EXPRESS
 
 app.get('/', (req, res) => {
-  res.sendfile(__dirname + '/index.html');
+  const boardId = shortid.generate();
+  res.redirect('/board/' + boardId);
 });
 
 app.get('/board/:id', (req, res) => {
-  console.log(req.params.id);
+  if(app.get('env') == 'production') {
+    res.sendFile(path.resolve('assets/index.production.html'));
+  } else {
+    res.sendFile(path.resolve('assets/index.html'));
+  }
 });
+
+if(app.get('env') == 'production') {
+  app.use(express.static(path.resolve('assets/')));
+}
 
 // SOCKET.IO
 

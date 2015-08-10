@@ -1,5 +1,6 @@
 import socketIO from 'socket.io-client';
-const socket = socketIO('http://localhost:4040');
+console.log(require('websocketUrl'));
+const socket = socketIO(require('websocketUrl'));
 
 function makeRequest(type) {
     return function(data) {
@@ -8,8 +9,9 @@ function makeRequest(type) {
 }
 
 socket.on('connect', function() {
+    const urlParts = document.URL.split("/");
     Request.Identify({
-        boardId: Math.random().toString()
+        boardId: urlParts[urlParts.length - 1]
     });
 });
 

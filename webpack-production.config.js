@@ -1,10 +1,10 @@
 module.exports = {
     entry: {
-        app: ['webpack/hot/dev-server', './app/client/main.js']
+        app: ['./app/client/main.js']
     },
     output: {
-        path: './assets/built',
-        publicPath: '/built',
+        path: './assets',
+        publicPath: '/',
         filename: 'bundle.js'
     },
     module: {
@@ -14,7 +14,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-          websocketUrl: '../../servers/local.js'
+          websocketUrl: '../../servers/remote.js'
         }
     }
 };
