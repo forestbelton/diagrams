@@ -8,8 +8,9 @@ function makeRequest(type) {
 }
 
 socket.on('connect', function() {
+    const urlParts = document.URL.split("/");
     Request.Identify({
-        boardId: Math.random().toString()
+        boardId: urlParts[urlParts.length - 1]
     });
 });
 
