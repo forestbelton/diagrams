@@ -1,5 +1,4 @@
 import socketIO from 'socket.io-client';
-console.log(require('websocketUrl'));
 const socket = socketIO(require('websocketUrl'));
 
 function makeRequest(type) {
