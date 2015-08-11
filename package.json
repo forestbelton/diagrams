@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app/server/main.js",
     "start-dev-server": "./node_modules/.bin/webpack-dev-server --content-base assets/ --hot",
     "build": "./node_modules/.bin/webpack -p --config webpack-production.config.js"
   },

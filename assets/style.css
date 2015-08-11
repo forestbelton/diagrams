@@ -1,3 +1,11 @@
+@font-face {
+    font-family:'STIXGeneral';
+    src:url('font/stixgeneralitalic-webfont.eot');
+    src:local('[smiley]'), url('font/stixgeneralitalic-webfont.woff') format('woff'), url('font/stixgeneralitalic-webfont.ttf') format('truetype'), url('font/stixgeneralitalic-webfont.svg#webfont2oJeLJIt') format('svg');
+    font-weight:normal;
+    font-style:italic;
+}
+
 .object {
     position:absolute;
     cursor:pointer;
@@ -20,6 +28,8 @@
     height:400px; /* for now */
     border:1px solid #000;
     user-select:none;
+    font-family:'STIXGeneral';
+    font-style:italic;
 }
 
 .hover {
